@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application Launcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 5px;
+        }
+        h1, h2 {
+            color: #333;
+            font-size: 24px;
+        }
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #e7e7e7;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 4px;
+            flex: 1;
+            margin: 0 5px;
+            display: block; /* Ensure buttons are always block elements */
+        }
+        button:hover {
+            background-color: #d4d4d4;
+        }
+        .search-box {
+            padding: 10px;
+            margin: 10px 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Application Launcher</h1>
+        <input type="text" class="search-box" placeholder="Search...">
+        <h2>Provisioning</h2>
+        <div class="button-row">
+            <button data-name="add node">Add Node</button>
+            <button data-name="bulk configuration">Bulk Configuration</button>
+            <button data-name="command line interface">Command Line Interface</button>
+        </div>
+        <div class="button-row">
+            <button data-name="link management">Link Management</button>
+            <button data-name="network explorer">Network Explorer</button>
+            <button data-name="release independence manager">Release Independence Manager</button>
+        </div>
+        <div class="button-row">
+            <button data-name="shell terminal on scripting">Shell Terminal on Scripting</button>
+            <button data-name="vnf life cycle manager">VNF Life Cycle Manager</button>
+            <button data-name="core network operations manager" onclick="location.href='003.html';">Core Network Operations Manager (CNOM)</button>
+        </div>
+    </div>
+
+    <script>
+        const searchBox = document.querySelector('.search-box');
+        searchBox.addEventListener('input', function() {
+            const searchQuery = this.value.toLowerCase();
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                const buttonText = button.getAttribute('data-name').toLowerCase();
+                if (buttonText.includes(searchQuery)) {
+                    button.style.display = 'block'; // Show the button
+                } else {
+                    button.style.display = 'none'; // Hide the button
+                }
+            });
+        });
+    </script>
+</body>
+</html>

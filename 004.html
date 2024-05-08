@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application Launcher - User Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            width: 80%; /* Adjust width as needed */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            color: #333;
+            font-size: 18px;
+            margin-top: 15px;
+            border-bottom: 1px solid #e7e7e7;
+            padding-bottom: 5px;
+        }
+        .menu-item {
+            margin: 10px 0;
+            padding: 10px 15px;
+            background-color: #e7e7e7;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: left;
+            display: inline-block;
+            width: 45%; /* Manage width for side-by-side appearance */
+        }
+        .menu-item:hover {
+            background-color: #d4d4d4;
+        }
+        .menu-item.highlight {
+            color: red;
+            font-weight: bold;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 15px;
+        }
+        .dashboard-link {
+            text-decoration: none;
+            color: #007bff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Application Dashboard</h1> <!-- Application Dashboard as a heading -->
+        <div class="section">
+            <h2 class="section-title">Monitoring</h2>
+            <div onclick="alert('Function not implemented yet');" class="menu-item">Network Monitor</div>
+            <div onclick="alert('Function not implemented yet');" class="menu-item">Alarm Viewer</div>
+            <div onclick="alert('Function not implemented yet');" class="menu-item">PM Monitor</div>
+        </div>
+        <div class="section">
+            <h2 class="section-title">Performance and Optimization</h2>
+            <div onclick="alert('Function not implemented yet');" class="menu-item">Data Collection & Analysis</div>
+            <div onclick="alert('Function not implemented yet');" class="menu-item">UE Trace</div>
+            <div onclick="alert('Function not implemented yet');" class="menu-item">Integrated Traffic Capture</div>
+            <div onclick="alert('Function not implemented yet');" class="menu-item">Application Trace</div>
+        </div>
+        <div class="section">
+            <h2 class="section-title">Security Management</h2>
+            <div onclick="location.href='create_1.html';" class="menu-item highlight">User Management</div>
+        </div>
+        <div class="section">
+            <h2 class="section-title">Configuration Management</h2>
+            <div onclick="alert('Function not implemented yet');" class="menu-item">Settings</div>
+            <div onclick="alert('Function not implemented yet');" class="menu-item">Data Manager</div>
+            <div onclick="alert('Function not implemented yet');" class="menu-item">KPI and Alert Management</div>
+        </div>
+    </div>
+</body>
+</html>
