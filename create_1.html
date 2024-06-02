@@ -46,41 +46,41 @@
             <tbody></tbody>
         </table>
     </div>
-    <!-- Overlay for Add/Edit User -->
+    <!-- Overlay for Add User -->
     <div class="overlay" id="addUserOverlay">
         <div class="overlay-content">
-            <h3 id="overlayTitle">Add New User</h3>
-            <input type="hidden" id="editingUsername">
-            <label for="username">Username</label><input type="text" id="username">
-            <label for="name">Name</label><input type="text" id="name">
-            <label for="surname">Surname</label><input type="text" id="surname">
-            <label for="role">Role</label>
-            <select id="role"><option>Administrator</option><option>Local</option><option>Other</option></select>
-            <label for="authProvider">Authentication Provider</label>
-            <select id="authProvider"><option>Local</option><option>Other</option></select>
-            <label for="email">Email</label><input type="email" id="email">
-            <label for="password">Password</label><input type="password" id="password">
-            <div style="display: flex; justify-content: space-between;">
-                <button onclick="submitUser()">Submit</button>
-                <button class="cancel-btn" onclick="toggleOverlay('')">Cancel</button>
+            <h3>Add New User</h3>
+            <label for="addUsername">Username</label><input type="text" id="addUsername">
+            <label for="addName">Name</label><input type="text" id="addName">
+            <label for="addSurname">Surname</label><input type="text" id="addSurname">
+            <label for="addRole">Role</label>
+            <select id="addRole"><option>Administrator</option><option>Local</option><option>Other</option></select>
+            <label for="addAuthProvider">Authentication Provider</label>
+            <select id="addAuthProvider"><option>Local</option><option>Other</option></select>
+            <label for="addEmail">Email</label><input type="email" id="addEmail">
+            <label for="addPassword">Password</label><input type="password" id="addPassword">
+            <div class="button-row">
+                <button onclick="submitAddUser()">Submit</button>
+                <button class="cancel-btn" onclick="toggleOverlay('addUserOverlay', false)">Cancel</button>
             </div>
         </div>
     </div>
+    <!-- Overlay for Edit User -->
     <div class="overlay" id="editUserOverlay">
         <div class="overlay-content">
-            <h3 id="overlayTitle">Edit User</h3>
+            <h3>Edit User</h3>
             <input type="hidden" id="editingUsername">
-            <label for="username">Username</label><input type="text" id="username">
-            <label for="name">Name</label><input type="text" id="name">
-            <label for="surname">Surname</label><input type="text" id="surname">
-            <label for="role">Role</label>
-            <select id="role"><option>Administrator</option><option>Local</option><option>Other</option></select>
-            <label for="authProvider">Authentication Provider</label>
-            <select id="authProvider"><option>Local</option><option>Other</option></select>
-            <label for="email">Email</label><input type="email" id="email">
-            <div style="display: flex; justify-content: space-between;">
-                <button onclick="submitUser()">Submit</button>
-                <button class="cancel-btn" onclick="toggleEditOverlay('')">Cancel</button>
+            <label for="editUsername">Username</label><input type="text" id="editUsername">
+            <label for="editName">Name</label><input type="text" id="editName">
+            <label for="editSurname">Surname</label><input type="text" id="editSurname">
+            <label for="editRole">Role</label>
+            <select id="editRole"><option>Administrator</option><option>Local</option><option>Other</option></select>
+            <label for="editAuthProvider">Authentication Provider</label>
+            <select id="editAuthProvider"><option>Local</option><option>Other</option></select>
+            <label for="editEmail">Email</label><input type="email" id="editEmail">
+            <div class="button-row">
+                <button onclick="submitEditUser()">Submit</button>
+                <button class="cancel-btn" onclick="toggleOverlay('editUserOverlay', false)">Cancel</button>
             </div>
         </div>
     </div>
@@ -89,12 +89,15 @@
             populateUsers(); // Initially populate the table with existing users
         });
 
+        let users = [
+            { username: "apdhillon", name: "Ram", surname: "Sadguru", role: "Administrator" },
+            { username: "reppycreepy", name: "Revanth", surname: "Creepy", role: "Administrator" },
+            { username: "mumtazbakka", name: "Abhinav Reddy", surname: "Mumtaz", role: "Administrator" }
+        ];
+
         function populateUsers() {
-            const users = [
-                { username: "apdhillon", name: "Ram", surname: "Sadguru", role: "Administrator" },
-                { username: "reppycreepy", name: "Revanth", surname: "Creepy", role: "Administrator" },
-                { username: "mumtazbakka", name: "Abhinav Reddy", surname: "Mumtaz", role: "Administrator" }
-            ];
+            const tableBody = document.getElementById('userTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = ""; // Clear the table
             users.forEach(user => addUserRow(user));
         }
 
@@ -123,72 +126,75 @@
         }
 
         function deleteUser(username) {
-            const rows = document.getElementById('userTable').getElementsByTagName('tbody')[0].rows;
-            for (let i = 0; i < rows.length; i++) {
-                if (rows[i].cells[1].innerText === username) {
-                    rows[i].remove();
-                    break;
-                }
-            }
+            users = users.filter(user => user.username !== username);
+            populateUsers();
         }
 
         function editUser(username) {
-            const users = [
-                { username: "apdhillon", name: "Ram", surname: "Sadguru", role: "Administrator", email: "apdhillon@example.com", password: "secret" },
-                { username: "reppycreepy", name: "Revanth", surname: "Creepy", role: "Administrator", email: "reppycreepy@example.com", password: "hide" },
-                { username: "mumtazbakka", name: "Abhinav Reddy", surname: "Mumtaz", role: "Administrator", email: "mumtazbakka@example.com", password: "welcome" }
-            ];
             const user = users.find(u => u.username === username);
             if (user) {
-                //document.getElementById('overlayTitle').innerText = 'Edit User';
                 document.getElementById('editingUsername').value = user.username;
-                document.getElementById('username').value = user.username;
-                document.getElementById('name').value = user.name;
-                document.getElementById('surname').value = user.surname;
-                document.getElementById('role').value = user.role;
-                document.getElementById('authProvider').value = 'Local'; // Assume always Local for simplicity
-                document.getElementById('email').value = user.email;
-                toggleEditOverlay('editUserOverlay');
+                document.getElementById('editUsername').value = user.username;
+                document.getElementById('editName').value = user.name;
+                document.getElementById('editSurname').value = user.surname;
+                document.getElementById('editRole').value = user.role;
+                document.getElementById('editAuthProvider').value = 'Local'; // Assume always Local for simplicity
+                document.getElementById('editEmail').value = user.email;
+                toggleOverlay('editUserOverlay', true);
             }
         }
 
-        function submitUser() {
-            const editingUsername = document.getElementById('editingUsername').value;
-            const username = document.getElementById('username').value;
-            const name = document.getElementById('name').value;
-            const surname = document.getElementById('surname').value;
-            const role = document.getElementById('role').value;
-            const authProvider = document.getElementById('authProvider').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+        function submitAddUser() {
+            const username = document.getElementById('addUsername').value;
+            const name = document.getElementById('addName').value;
+            const surname = document.getElementById('addSurname').value;
+            const role = document.getElementById('addRole').value;
+            const authProvider = document.getElementById('addAuthProvider').value;
+            const email = document.getElementById('addEmail').value;
+            const password = document.getElementById('addPassword').value;
 
-            if (editingUsername) {
-                const rows = document.getElementById('userTable').getElementsByTagName('tbody')[0].rows;
-                for (let i = 0; i < rows.length; i++) {
-                    if (rows[i].cells[1].innerText === editingUsername) {
-                        rows[i].cells[1].innerText = username;
-                        rows[i].cells[2].innerText = role;
-                        rows[i].cells[3].innerText = name;
-                        rows[i].cells[4].innerText = surname;
-                        break;
-                    }
-                }
+            if (username && name && surname && email && password) {
+                users.push({ username, name, surname, role, authProvider, email });
+                populateUsers();
+                toggleOverlay('addUserOverlay', false);
+                clearAddUserFields();
             } else {
-                addUserRow({ username, name, surname, role, authProvider, email, password });
+                alert("All fields are required for adding a new user!");
             }
-
-            toggleOverlay(''); // Close the overlay
         }
 
+        function submitEditUser() {
+            const editingUsername = document.getElementById('editingUsername').value;
+            const username = document.getElementById('editUsername').value;
+            const name = document.getElementById('editName').value;
+            const surname = document.getElementById('editSurname').value;
+            const role = document.getElementById('editRole').value;
+            const authProvider = document.getElementById('editAuthProvider').value;
+            const email = document.getElementById('editEmail').value;
 
-        function toggleOverlay(overlayId) {
-            const overlay = document.getElementById('addUserOverlay');
-            overlay.style.visibility = (overlay.style.visibility === "visible") ? "hidden" : "visible";
+            const userIndex = users.findIndex(user => user.username === editingUsername);
+            if (userIndex > -1) {
+                users[userIndex] = { username, name, surname, role, authProvider, email };
+                populateUsers();
+                toggleOverlay('editUserOverlay', false);
+            } else {
+                alert("User not found for editing!");
+            }
         }
 
-        function toggleEditOverlay(overlayId) {
-            const overlay = document.getElementById('editUserOverlay');
-            overlay.style.visibility = (overlay.style.visibility === "visible") ? "hidden" : "visible";
+        function toggleOverlay(overlayId, show) {
+            const overlay = document.getElementById(overlayId);
+            overlay.style.visibility = show ? 'visible' : 'hidden';
+        }
+
+        function clearAddUserFields() {
+            document.getElementById('addUsername').value = "";
+            document.getElementById('addName').value = "";
+            document.getElementById('addSurname').value = "";
+            document.getElementById('addRole').value = "Administrator";
+            document.getElementById('addAuthProvider').value = "Local";
+            document.getElementById('addEmail').value = "";
+            document.getElementById('addPassword').value = "";
         }
 
         function filterUsers() {
@@ -204,7 +210,6 @@
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
                         tr[i].style.display = "";
                     } else {
-                        // Hide the rows that do not match the search query
                         tr[i].style.display = "none";
                     }
                 }
